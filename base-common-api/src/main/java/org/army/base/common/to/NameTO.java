@@ -1,9 +1,6 @@
 package org.army.base.common.to;
 
-import javax.persistence.Embeddable;
-
-@Embeddable
-public class Name {
+public class NameTO {
 
     private String salutation;
 

@@ -1,9 +1,6 @@
 package org.army.base.common.to;
 
-import javax.persistence.Embeddable;
-
-@Embeddable
-public class Address {
+public class AddressTO {
 
     private String addressLine1;
 

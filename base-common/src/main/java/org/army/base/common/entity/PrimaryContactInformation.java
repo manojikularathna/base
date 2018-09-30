@@ -1,4 +1,4 @@
-package org.army.base.common.to;
+package org.army.base.common.entity;
 
 import javax.persistence.Embeddable;
 
