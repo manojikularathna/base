@@ -21,6 +21,8 @@
   <modules>
     <module>base-common-api</module>
     <module>base-common</module>
+    <module>base-accounting-api</module>
+    <module>base-accounting</module>
   </modules>
 
   <dependencyManagement>
