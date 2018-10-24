@@ -1,4 +1,4 @@
-package org.army.common.accounting.to;
+package org.army.common.accounting.to.common;
 
 public class PeriodTO {
 

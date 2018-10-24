@@ -7,7 +7,7 @@ import java.util.List;
 
 public class LedgerAccountEntryTO extends EntryTO {
 
-    private List<LedgerAccountAmendment> amendments;
+    private List<LedgerAccountAmendmentTO> amendments;
 
     private BigDecimal finalAmount;
 

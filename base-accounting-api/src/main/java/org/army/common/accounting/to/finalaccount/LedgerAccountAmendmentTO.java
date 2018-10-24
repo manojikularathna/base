@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 
 @Setter
 @Getter
-public class LedgerAccountAmendment {
+public class LedgerAccountAmendmentTO {
 
     private BigDecimal broughtForward;
 

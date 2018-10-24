@@ -2,7 +2,7 @@ package org.army.common.accounting.to.metadata;
 
 import java.util.List;
 
-public class TransactionType {
+public class TransactionTypeTO {
 
     private String transactionName;
 
@@ -10,8 +10,8 @@ public class TransactionType {
 
     private String transactionCategory;
 
-    private List<LedgerAccount> ledgerAccounts;
+    private List<LedgerAccountTO> ledgerAccounts;
 
-    private List<TransactionSubType> subTypes;
+    private List<TransactionSubTypeTO> subTypes;
 
 }

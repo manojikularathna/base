@@ -1,6 +1,6 @@
 package org.army.common.accounting.to.metadata;
 
-public class BankAccount extends TransactionAccount {
+public class BankAccountTO extends TransactionAccountTO {
 
     private String bankName;
 

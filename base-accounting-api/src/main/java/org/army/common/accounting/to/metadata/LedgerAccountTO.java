@@ -7,7 +7,7 @@ import java.util.List;
 
 @Setter
 @Getter
-public class LedgerAccount {
+public class LedgerAccountTO {
 
     private String accountName;
 
@@ -15,8 +15,8 @@ public class LedgerAccount {
 
     private String ledgerAccountCategory;
 
-    private List<LedgerAccount> attachments;
+    private List<LedgerAccountTO> attachments;
 
-    private LedgerAccount attachedAccount;
+    private LedgerAccountTO attachedAccount;
 
 }

@@ -3,11 +3,11 @@ package org.army.common.accounting.to.finalaccount;
 import java.math.BigDecimal;
 import java.util.List;
 
-public class FinalAccountsItemGroup extends FinalAccountsItem {
+public class FinalAccountsItemGroupTO extends FinalAccountsItemTO {
 
     private String groupName;
 
-    private List<FinalAccountsItem> items;
+    private List<FinalAccountsItemTO> items;
 
     private String balanceName;
 

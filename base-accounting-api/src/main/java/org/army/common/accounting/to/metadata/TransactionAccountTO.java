@@ -1,6 +1,6 @@
 package org.army.common.accounting.to.metadata;
 
-public class TransactionAccount {
+public class TransactionAccountTO {
 
     private String accountName;
 

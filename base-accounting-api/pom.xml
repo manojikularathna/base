@@ -14,5 +14,10 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
   <dependencies>
+    <dependency>
+      <groupId>org.army.base</groupId>
+      <artifactId>base-common-api</artifactId>
+      <version>0.0.1</version>
+    </dependency>
   </dependencies>
 </project>

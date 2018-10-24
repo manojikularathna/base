@@ -4,12 +4,12 @@ import org.army.common.accounting.to.common.GeneratePeriod;
 
 import java.util.List;
 
-public class FinalAccountsHierarchy {
+public class FinalAccountsHierarchyTO {
 
     private String accountName;
 
     private GeneratePeriod period;
 
-    private List<FinalAccountsItem> items;
+    private List<FinalAccountsItemTO> items;
 
 }

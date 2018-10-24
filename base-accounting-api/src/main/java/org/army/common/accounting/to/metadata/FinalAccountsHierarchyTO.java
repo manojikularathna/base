@@ -2,10 +2,10 @@ package org.army.common.accounting.to.metadata;
 
 import java.util.List;
 
-public class FinalAccountsHierarchy {
+public class FinalAccountsHierarchyTO {
 
     private String accountName;
 
-    private List<FinalAccountsItem> items;
+    private List<FinalAccountsItemTO> items;
 
 }
