@@ -9,17 +9,28 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 @Setter
 @Getter
 @Entity
-public class LedgerAccountBalance {
+public class CashBookEntry {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long ledgerAccountBalanceId;
+    private Long cashBookEntryId;
 
     private Date date;
 
-    private BigDecimal balance;
+    private BigDecimal amount;
+
+    private CashBook cashBook;
+
+    private TransactionType transactionType;
+
+    private TransactionType transactionSubType;
+
+    private List<LedgerAccountEntry> ledgerAccountEntries;
+
+    private String status;
 }

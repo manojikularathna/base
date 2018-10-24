@@ -7,19 +7,24 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.math.BigDecimal;
-import java.util.Date;
+import java.util.List;
 
 @Setter
 @Getter
 @Entity
-public class LedgerAccountBalance {
+public class FinalAccountElementGroup {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long ledgerAccountBalanceId;
+    private Long elementGroupId;
 
-    private Date date;
+    private FinalAccountElementGroup parent;
 
-    private BigDecimal balance;
+    private List<FinalAccountElementGroup> subGroups;
+
+    private List<FinalAccountElement> elements;
+
+    private String groupHeader;
+
+    private String groupFooter;
 }

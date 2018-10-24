@@ -7,19 +7,17 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.math.BigDecimal;
-import java.util.Date;
 
 @Setter
 @Getter
 @Entity
-public class LedgerAccountBalance {
+public class FinalAccountStructure {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long ledgerAccountBalanceId;
+    private Long structureId;
 
-    private Date date;
+    private String finalAccountType;
 
-    private BigDecimal balance;
+
 }

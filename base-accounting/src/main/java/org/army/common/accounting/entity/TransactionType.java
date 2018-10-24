@@ -12,22 +12,23 @@ import java.util.List;
 @Setter
 @Getter
 @Entity
-public class LedgerAccount {
+public class TransactionType {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long ledgerAccountId;
+    private Long transactionId;
 
-    private String accountName;
+    private String transactionName;
 
     private String description;
 
-    private String ledgerCategory;
+    private String transactionCategory;
 
-    private LedgerAccount attachedAccount;
+    private TransactionType parentType;
 
-    private List<LedgerAccount> attachments;
+    private List<TransactionType> subTypes;
+
+    private List<LedgerAccount> ledgerAccounts;
 
     private String status;
-
 }

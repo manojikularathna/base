@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class SettleMethodTO {
+public class CashBookTO {
 
     private String name;
 

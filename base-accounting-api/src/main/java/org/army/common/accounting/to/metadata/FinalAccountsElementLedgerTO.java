@@ -1,6 +1,6 @@
 package org.army.common.accounting.to.metadata;
 
-public class FinalAccountsItemLedgerTO extends FinalAccountsItemTO {
+public class FinalAccountsElementLedgerTO extends FinalAccountsElementTO {
 
     private LedgerAccountTO ledgerAccount;
 

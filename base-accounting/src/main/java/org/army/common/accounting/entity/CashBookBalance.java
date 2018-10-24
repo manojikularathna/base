@@ -13,11 +13,11 @@ import java.util.Date;
 @Setter
 @Getter
 @Entity
-public class LedgerAccountBalance {
+public class CashBookBalance {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long ledgerAccountBalanceId;
+    private Long cashBookBalanceId;
 
     private Date date;
 

@@ -12,6 +12,6 @@ public class TransactionTypeTO {
 
     private List<LedgerAccountTO> ledgerAccounts;
 
-    private List<TransactionSubTypeTO> subTypes;
+    private List<TransactionTypeTO> subTypes;
 
 }
