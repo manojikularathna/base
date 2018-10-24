@@ -1,4 +1,4 @@
-package org.army.common.accounting.to.finalaccount;
+package org.army.common.accounting.to.ledger;
 
 import org.army.common.accounting.to.common.EntryTO;
 

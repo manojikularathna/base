@@ -14,4 +14,8 @@ public interface AccountingMetadata {
         String LIABILITY = "LIABILITY";
     }
 
+    interface FinalAccountType {
+        String PROFIT_AND_LOSS_ACCOUNT = "PROFIT_AND_LOSS_ACCOUNT";
+        String BALANCE_SHEET = "BALANCE_SHEET";
+    }
 }

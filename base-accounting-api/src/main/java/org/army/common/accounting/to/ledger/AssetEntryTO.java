@@ -1,4 +1,4 @@
-package org.army.common.accounting.to.finalaccount;
+package org.army.common.accounting.to.ledger;
 
 public class AssetEntryTO extends LedgerAccountEntryTO {
 
