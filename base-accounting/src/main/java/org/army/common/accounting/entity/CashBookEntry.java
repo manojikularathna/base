@@ -3,10 +3,7 @@ package org.army.common.accounting.entity;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -24,12 +21,19 @@ public class CashBookEntry {
 
     private BigDecimal amount;
 
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "cash_book_id")
     private CashBook cashBook;
 
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "transaction_type_id")
     private TransactionType transactionType;
 
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "transaction_subtype_id")
     private TransactionType transactionSubType;
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "cashBookEntry")
     private List<LedgerAccountEntry> ledgerAccountEntries;
 
     private String status;

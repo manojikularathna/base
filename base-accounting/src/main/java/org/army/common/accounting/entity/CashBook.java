@@ -3,10 +3,7 @@ package org.army.common.accounting.entity;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.List;
 
 @Setter
@@ -22,7 +19,9 @@ public class CashBook {
 
     private String description;
 
-    private CashBookBalance balance;
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "cashBook")
+    private CashBookBalance openingBalance;
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "cashBook")
     private List<CashBookEntry> entries;
 }

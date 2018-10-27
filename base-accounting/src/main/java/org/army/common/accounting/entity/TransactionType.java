@@ -3,10 +3,7 @@ package org.army.common.accounting.entity;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.List;
 
 @Setter
@@ -16,7 +13,7 @@ public class TransactionType {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long transactionId;
+    private Long transactionTypeId;
 
     private String transactionName;
 
@@ -24,10 +21,18 @@ public class TransactionType {
 
     private String transactionCategory;
 
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "parent_type_id")
     private TransactionType parentType;
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "parentType")
     private List<TransactionType> subTypes;
 
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "transaction_type_ledger_account",
+            joinColumns = @JoinColumn(name = "transaction_type_id"),
+            inverseJoinColumns = @JoinColumn(name = "ledger_account_id"))
     private List<LedgerAccount> ledgerAccounts;
 
     private String status;

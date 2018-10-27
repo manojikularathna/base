@@ -2,12 +2,8 @@ package org.army.common.accounting.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.army.common.accounting.entity.LedgerAccount;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Setter
 @Getter
@@ -18,5 +14,7 @@ public class FinalAccountElement {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long elementId;
 
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "ledger_account_id")
     private LedgerAccount ledgerAccount;
 }

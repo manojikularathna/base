@@ -3,10 +3,8 @@ package org.army.common.accounting.entity;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Setter
 @Getter
@@ -15,9 +13,13 @@ public class FinalAccountStructure {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "structure_id")
     private Long structureId;
 
     private String finalAccountType;
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(referencedColumnName = "structure_id")
+    private List<FinalAccountElementGroup> groups;
 
 }
