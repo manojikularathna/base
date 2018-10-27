@@ -1,4 +1,4 @@
-package org.army.base.common.entity;
+package org.army.common.entity;
 
 public class SecondaryContactInformation {
 
