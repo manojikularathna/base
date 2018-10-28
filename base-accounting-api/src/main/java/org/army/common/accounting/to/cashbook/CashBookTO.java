@@ -1,4 +1,4 @@
-package org.army.common.accounting.to.daybook;
+package org.army.common.accounting.to.cashbook;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -9,7 +9,7 @@ import java.util.List;
 
 @Setter
 @Getter
-public class DayBook {
+public class CashBookTO {
 
     private String name;
 

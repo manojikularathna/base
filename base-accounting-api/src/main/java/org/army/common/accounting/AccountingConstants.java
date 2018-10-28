@@ -5,6 +5,7 @@ public interface AccountingConstants {
     interface TransactionCategory {
         String CREDIT = "C";
         String DEBIT = "D";
+        String NONE = "N";
     }
 
     interface LedgerCategory {
@@ -15,8 +16,4 @@ public interface AccountingConstants {
         String EQUITY = "E";
     }
 
-    interface FinalAccountType {
-        String PROFIT_AND_LOSS_ACCOUNT = "PL";
-        String BALANCE_SHEET = "BS";
-    }
 }

@@ -11,7 +11,7 @@ import java.util.List;
 @Setter
 @Getter
 @Entity
-public class CashBookEntry {
+public class CashBookEntry extends AccountingEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -28,10 +28,6 @@ public class CashBookEntry {
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "transaction_type_id")
     private TransactionType transactionType;
-
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "transaction_subtype_id")
-    private TransactionType transactionSubType;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "cashBookEntry")
     private List<LedgerAccountEntry> ledgerAccountEntries;

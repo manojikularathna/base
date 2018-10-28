@@ -9,7 +9,7 @@ import java.util.List;
 @Setter
 @Getter
 @Entity
-public class CashBook {
+public class CashBook extends AccountingOrganizationalEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -18,6 +18,8 @@ public class CashBook {
     private String cashBookName;
 
     private String description;
+
+    private String status;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "cashBook")
     private CashBookBalance openingBalance;

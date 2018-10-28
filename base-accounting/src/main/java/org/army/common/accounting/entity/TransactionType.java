@@ -9,7 +9,7 @@ import java.util.List;
 @Setter
 @Getter
 @Entity
-public class TransactionType {
+public class TransactionType extends AccountingOrganizationalEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

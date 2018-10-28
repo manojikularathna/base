@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Setter
 @Getter
 @Entity
-public class FinalAccountElement {
+public class FinalAccountElement extends AccountingEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

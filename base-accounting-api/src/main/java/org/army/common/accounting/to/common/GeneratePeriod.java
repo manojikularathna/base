@@ -1,20 +1,7 @@
 package org.army.common.accounting.to.common;
 
-public abstract class GeneratePeriod {
+import java.util.Date;
 
-    public interface GenerateType {
-        String ANNUAL = "ANNUAL";
-        String QUARTER = "QUARTER";
-        String CUSTOM = "CUSTOM";
-    }
+public class GeneratePeriod extends Range<Date> {
 
-    private String generatePeriod;
-
-    public String getGeneratePeriod() {
-        return generatePeriod;
-    }
-
-    public void setGeneratePeriod(String generatePeriod) {
-        this.generatePeriod = generatePeriod;
-    }
 }

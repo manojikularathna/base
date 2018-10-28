@@ -9,7 +9,7 @@ import java.util.List;
 @Setter
 @Getter
 @Entity
-public class FinalAccountStructure {
+public class FinalAccountStructure extends AccountingOrganizationalEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

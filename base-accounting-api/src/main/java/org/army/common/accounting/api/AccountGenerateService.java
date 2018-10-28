@@ -1,15 +1,16 @@
 package org.army.common.accounting.api;
 
 import org.army.common.accounting.to.*;
+import org.army.common.accounting.to.finalaccount.AccountsGenerateTO;
 
 public interface AccountGenerateService {
 
-    DayBookResponse generateDayBook(AccountsGenerateRequest request);
+    DayBookResponse generateDayBook(AccountingRequest<AccountsGenerateTO> request);
 
-    LedgerResponse generateLedger(AccountsGenerateRequest request);
+    LedgerResponse generateLedger(AccountingRequest<AccountsGenerateTO> request);
 
-    FinalAccountResponse generateProfitAndLossAccount(AccountsGenerateRequest request);
+    FinalAccountResponse generateProfitAndLossAccount(AccountingRequest<AccountsGenerateTO> request);
 
-    FinalAccountResponse generateBalanceSheet(AccountsGenerateRequest request);
+    FinalAccountResponse generateBalanceSheet(AccountingRequest<AccountsGenerateTO> request);
 
 }

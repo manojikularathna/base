@@ -2,7 +2,8 @@ package org.army.common.accounting.service;
 
 import org.army.common.accounting.api.AccountGenerateService;
 import org.army.common.accounting.bl.AccountGenerateBL;
-import org.army.common.accounting.to.AccountsGenerateRequest;
+import org.army.common.accounting.to.AccountingRequest;
+import org.army.common.accounting.to.finalaccount.AccountsGenerateTO;
 import org.army.common.accounting.to.DayBookResponse;
 import org.army.common.accounting.to.FinalAccountResponse;
 import org.army.common.accounting.to.LedgerResponse;
@@ -22,25 +23,25 @@ public class AccountGenerateServiceImpl implements AccountGenerateService {
 
     @RequestMapping(path = "/day-book", method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public DayBookResponse generateDayBook(@RequestBody AccountsGenerateRequest request) {
+    public DayBookResponse generateDayBook(@RequestBody AccountingRequest<AccountsGenerateTO> request) {
         return accountGenerateBL.generateDayBook(request);
     }
 
     @RequestMapping(path = "/ledger", method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public LedgerResponse generateLedger(@RequestBody AccountsGenerateRequest request) {
+    public LedgerResponse generateLedger(@RequestBody AccountingRequest<AccountsGenerateTO> request) {
         return accountGenerateBL.generateLedger(request);
     }
 
     @RequestMapping(path = "/profit-and-loss-account", method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public FinalAccountResponse generateProfitAndLossAccount(@RequestBody AccountsGenerateRequest request) {
+    public FinalAccountResponse generateProfitAndLossAccount(@RequestBody AccountingRequest<AccountsGenerateTO> request) {
         return accountGenerateBL.generateProfitAndLossAccount(request);
     }
 
     @RequestMapping(path = "/balance-sheet", method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public FinalAccountResponse generateBalanceSheet(@RequestBody AccountsGenerateRequest request) {
+    public FinalAccountResponse generateBalanceSheet(@RequestBody AccountingRequest<AccountsGenerateTO> request) {
         return accountGenerateBL.generateBalanceSheet(request);
     }
 }

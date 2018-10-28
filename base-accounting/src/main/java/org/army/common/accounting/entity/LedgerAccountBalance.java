@@ -10,7 +10,7 @@ import java.util.Date;
 @Setter
 @Getter
 @Entity
-public class LedgerAccountBalance {
+public class LedgerAccountBalance extends AccountingEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

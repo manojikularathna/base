@@ -2,7 +2,7 @@ package org.army.common.accounting.to;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.army.common.accounting.to.daybook.DayBook;
+import org.army.common.accounting.to.cashbook.CashBookTO;
 
 import java.util.List;
 
@@ -10,6 +10,6 @@ import java.util.List;
 @Getter
 public class DayBookResponse extends AccountsGenerateResponse {
 
-    private List<DayBook> dayBooks;
+    private List<CashBookTO> cashBooks;
 
 }

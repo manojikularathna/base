@@ -9,7 +9,7 @@ import java.util.List;
 @Setter
 @Getter
 @Entity
-public class LedgerAccount {
+public class LedgerAccount extends AccountingOrganizationalEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

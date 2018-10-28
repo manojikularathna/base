@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Setter
 @Getter
 @Entity
-public class LedgerAccountEntry {
+public class LedgerAccountEntry extends AccountingEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
