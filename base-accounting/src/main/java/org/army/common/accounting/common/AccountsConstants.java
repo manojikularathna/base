@@ -7,4 +7,7 @@ public interface AccountsConstants {
         String INACTIVE = "INA";
     }
 
+    interface ErrorCode {
+        String CASH_BOOK_INVALID = "cash-book.invalid";
+    }
 }
