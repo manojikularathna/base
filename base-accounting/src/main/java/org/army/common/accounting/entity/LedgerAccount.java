@@ -21,9 +21,8 @@ public class LedgerAccount extends AccountingOrganizationalEntity {
 
     private String ledgerCategory;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(referencedColumnName = "ledger_account_id")
-    private LedgerAccountBalance openingBalance;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<LedgerAccountBalance> openingBalance;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "attached_account_id")

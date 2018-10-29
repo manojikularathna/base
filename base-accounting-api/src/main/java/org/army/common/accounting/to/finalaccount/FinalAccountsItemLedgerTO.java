@@ -4,7 +4,7 @@ import org.army.common.accounting.to.metadata.LedgerAccountTO;
 
 import java.math.BigDecimal;
 
-public class FinalAccountsItemLedgerTO extends FinalAccountsItemTO {
+public class FinalAccountsItemLedgerTO {
 
     private LedgerAccountTO ledgerAccount;
 

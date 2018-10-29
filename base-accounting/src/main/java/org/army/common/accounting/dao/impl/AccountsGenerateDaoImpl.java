@@ -3,10 +3,7 @@ package org.army.common.accounting.dao.impl;
 import org.army.common.accounting.AccountingConstants;
 import org.army.common.accounting.common.AccountingInternalConstants;
 import org.army.common.accounting.dao.AccountsGenerateDao;
-import org.army.common.accounting.entity.CashBook;
-import org.army.common.accounting.entity.CashBookEntry;
-import org.army.common.accounting.entity.LedgerAccount;
-import org.army.common.accounting.entity.LedgerAccountEntry;
+import org.army.common.accounting.entity.*;
 import org.army.common.accounting.to.common.OrganizationTO;
 import org.army.common.accounting.to.common.Range;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import java.math.BigDecimal;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Repository
 public class AccountsGenerateDaoImpl implements AccountsGenerateDao {
@@ -109,12 +103,65 @@ public class AccountsGenerateDaoImpl implements AccountsGenerateDao {
         return sum;
     }
 
+    public FinalAccountStructure getFinalAccountStructure(OrganizationTO organization, String finalAccountType) {
+
+        FinalAccountStructure structure = (FinalAccountStructure) entityManager
+                .createQuery("select s from FinalAccountStructure s where s.organization = :organization " +
+                        " and s.finalAccountType < :finalAccountType ")
+                .setParameter("organization", organization.getOrganization())
+                .setParameter("finalAccountType", finalAccountType)
+                .getSingleResult();
+
+        return structure;
+    }
+
     public Map<Long, BigDecimal> getLedgerTransactionsSum(List<Long> ledgerAccountIds, Range<Date> range) {
-        return null;
+
+        Map<Long, BigDecimal> transactionSummations = new HashMap<>();
+        List<Object[]> summations = entityManager
+                .createQuery("select e.ledgerAccount.ledgerAccountId, sum (e.cashBookEntry.amount) from LedgerAccountEntry e where e.ledgerAccount.ledgerAccountId in ( :ledgerAccountIds ) and e.status = :status " +
+                        " and e.cashBookEntry.date >= :fromDate and e.cashBookEntry.date <= :toDate group by e.ledgerAccount.ledgerAccountId ")
+                .setParameter("ledgerAccountIds", ledgerAccountIds)
+                .setParameter("status", AccountingInternalConstants.Status.ACTIVE)
+                .setParameter("fromDate", range.getFrom())
+                .setParameter("toDate", range.getTo())
+                .getResultList();
+
+        if (summations == null) {
+            summations.forEach(summation -> transactionSummations.put((Long) summation[0], (BigDecimal) summation[1]));
+        }
+
+        ledgerAccountIds.forEach(ledgerAccountId -> {
+            if (!transactionSummations.containsKey(ledgerAccountId)) {
+                transactionSummations.put(ledgerAccountId, BigDecimal.ZERO);
+            }
+        });
+
+        return transactionSummations;
     }
 
     public Map<Long, BigDecimal> getLedgerTransactionsSum(List<Long> ledgerAccountIds, Date end) {
-        return null;
+
+        Map<Long, BigDecimal> transactionSummations = new HashMap<>();
+        List<Object[]> summations = entityManager
+                .createQuery("select e.ledgerAccount.ledgerAccountId, sum (e.cashBookEntry.amount) from LedgerAccountEntry e where e.ledgerAccount.ledgerAccountId in ( :ledgerAccountIds ) and e.status = :status " +
+                        " and e.cashBookEntry.date <= :toDate group by e.ledgerAccount.ledgerAccountId ")
+                .setParameter("ledgerAccountIds", ledgerAccountIds)
+                .setParameter("status", AccountingInternalConstants.Status.ACTIVE)
+                .setParameter("toDate", end)
+                .getResultList();
+
+        if (summations == null) {
+            summations.forEach(summation -> transactionSummations.put((Long) summation[0], (BigDecimal) summation[1]));
+        }
+
+        ledgerAccountIds.forEach(ledgerAccountId -> {
+            if (!transactionSummations.containsKey(ledgerAccountId)) {
+                transactionSummations.put(ledgerAccountId, BigDecimal.ZERO);
+            }
+        });
+
+        return transactionSummations;
     }
 
 }

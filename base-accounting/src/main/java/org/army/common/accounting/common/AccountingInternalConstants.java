@@ -24,11 +24,6 @@ public interface AccountingInternalConstants {
         String INACTIVE = "INA";
     }
 
-    interface FinalAccountType {
-        String PROFIT_AND_LOSS_ACCOUNT = "PL";
-        String BALANCE_SHEET = "BS";
-    }
-
     interface ErrorCode {
         String ERROR = "error";
 

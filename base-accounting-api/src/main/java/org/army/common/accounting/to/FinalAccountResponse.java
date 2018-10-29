@@ -2,7 +2,7 @@ package org.army.common.accounting.to;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.army.common.accounting.to.finalaccount.FinalAccountsItemTO;
+import org.army.common.accounting.to.finalaccount.FinalAccountsItemGroupTO;
 
 import java.util.List;
 
@@ -12,5 +12,5 @@ public class FinalAccountResponse extends AccountsGenerateResponse {
 
     private String accountType;
 
-    private List<FinalAccountsItemTO> items;
+    private List<FinalAccountsItemGroupTO> groups;
 }

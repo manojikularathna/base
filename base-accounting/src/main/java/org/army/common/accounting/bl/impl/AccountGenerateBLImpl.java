@@ -1,5 +1,6 @@
 package org.army.common.accounting.bl.impl;
 
+import org.army.common.accounting.AccountingConstants;
 import org.army.common.accounting.bl.AccountGenerateBL;
 import org.army.common.accounting.bl.impl.generate.CashBookGenerator;
 import org.army.common.accounting.bl.impl.generate.FinalAccountsGenerator;
@@ -15,14 +16,19 @@ import org.army.common.accounting.to.LedgerResponse;
 import org.army.common.accounting.to.cashbook.CashBookTO;
 import org.army.common.accounting.to.common.GeneratePeriod;
 import org.army.common.accounting.to.finalaccount.AccountsGenerateTO;
+import org.army.common.accounting.to.finalaccount.FinalAccountsItemGroupTO;
 import org.army.common.accounting.to.ledger.LedgerAccountTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class AccountGenerateBLImpl implements AccountGenerateBL {
@@ -94,7 +100,12 @@ public class AccountGenerateBLImpl implements AccountGenerateBL {
         try {
 
             GeneratePeriod generatePeriod = request.getPayload().getPeriod();
-            List<LedgerAccount> ledgerAccounts = accountsGenerateDao.getLedgerAccounts(request.getOrganization());
+            List<FinalAccountsItemGroupTO> finalAccountsItemGroupTOs = finalAccountsGenerator
+                    .generateFinalAccountsElements(request.getOrganization(), AccountingConstants.FinalAccountType.PROFIT_AND_LOSS_ACCOUNT, generatePeriod);
+
+            finalAccountResponse.setAccountType(AccountingConstants.FinalAccountType.PROFIT_AND_LOSS_ACCOUNT);
+            finalAccountResponse.setGroups(finalAccountsItemGroupTOs);
+            finalAccountResponse.setSuccess(true);
 
 
         } catch (Exception e) {
@@ -113,8 +124,12 @@ public class AccountGenerateBLImpl implements AccountGenerateBL {
         try {
 
             GeneratePeriod generatePeriod = request.getPayload().getPeriod();
-            List<LedgerAccount> ledgerAccounts = accountsGenerateDao.getLedgerAccounts(request.getOrganization());
+            List<FinalAccountsItemGroupTO> finalAccountsItemGroupTOs = finalAccountsGenerator
+                    .generateFinalAccountsElements(request.getOrganization(), AccountingConstants.FinalAccountType.BALANCE_SHEET, generatePeriod);
 
+            finalAccountResponse.setAccountType(AccountingConstants.FinalAccountType.BALANCE_SHEET);
+            finalAccountResponse.setGroups(finalAccountsItemGroupTOs);
+            finalAccountResponse.setSuccess(true);
 
         } catch (Exception e) {
             finalAccountResponse.setMessage(AccountingInternalConstants.ErrorCode.ERROR);

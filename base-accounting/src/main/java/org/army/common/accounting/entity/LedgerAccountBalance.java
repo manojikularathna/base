@@ -20,7 +20,9 @@ public class LedgerAccountBalance extends AccountingEntity {
 
     private BigDecimal balance;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "ledger_account_id")
     private LedgerAccount ledgerAccount;
+
+    private String status;
 }

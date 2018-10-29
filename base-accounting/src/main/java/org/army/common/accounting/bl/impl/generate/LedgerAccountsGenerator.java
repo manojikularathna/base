@@ -27,8 +27,8 @@ public class LedgerAccountsGenerator {
         LedgerAccountTO ledgerAccountTO = new LedgerAccountTO();
 
         BigDecimal openingBalance = BigDecimal.ZERO;
-        if (ledgerAccount.getOpeningBalance() != null) {
-            openingBalance = ledgerAccount.getOpeningBalance().getBalance();
+        if (!ledgerAccount.getOpeningBalance().isEmpty()) {
+            openingBalance = ledgerAccount.getOpeningBalance().get(0).getBalance();
         }
 
         openingBalance = openingBalance.add(getPreviousTransactionsSum(ledgerAccount.getLedgerAccountId(), generatePeriod.getFrom()));

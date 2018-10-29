@@ -1,9 +1,6 @@
 package org.army.common.accounting.dao;
 
-import org.army.common.accounting.entity.CashBook;
-import org.army.common.accounting.entity.CashBookEntry;
-import org.army.common.accounting.entity.LedgerAccount;
-import org.army.common.accounting.entity.LedgerAccountEntry;
+import org.army.common.accounting.entity.*;
 import org.army.common.accounting.to.common.OrganizationTO;
 import org.army.common.accounting.to.common.Range;
 
@@ -26,7 +23,10 @@ public interface AccountsGenerateDao {
 
     BigDecimal getPreviousLedgerTransactionsSum(Long cashBookId, Date start);
 
+    FinalAccountStructure getFinalAccountStructure(OrganizationTO organization, String finalAccountType);
+
     Map<Long, BigDecimal> getLedgerTransactionsSum(List<Long> ledgerAccountIds, Range<Date> range);
 
     Map<Long, BigDecimal> getLedgerTransactionsSum(List<Long> ledgerAccountIds, Date end);
+
 }
