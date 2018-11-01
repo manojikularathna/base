@@ -29,7 +29,11 @@ public interface AccountingInternalConstants {
 
         String CASH_BOOK_EMPTY = "cash-book.empty";
         String CASH_BOOK_INVALID = "cash-book.invalid";
+
         String TRANSACTION_TYPE_EMPTY = "transaction-type.empty";
         String TRANSACTION_TYPE_INVALID = "transaction-type.invalid";
+
+        String FINAL_ACCOUNT_TYPE_UNDEFINED = "final-account.type.undefined";
+        String PROFIT_AND_LOSS_ACCOUNT_UNDEFINED = "profit-and-loss-account.undefined";
     }
 }
