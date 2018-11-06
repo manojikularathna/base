@@ -17,6 +17,8 @@ public class TransactionType extends AccountingOrganizationalEntity {
 
     private String transactionName;
 
+    private String transactionCode;
+
     private String description;
 
     private String transactionCategory;

@@ -10,6 +10,8 @@ public interface CommonDAO {
 
     <T> void add(List<T> entities);
 
+    <T> void update(List<T> entities);
+
     <T> List<T> get(Class<T> type);
 
     <T, I> T get(Class<T> type, I id);

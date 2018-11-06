@@ -14,8 +14,8 @@ public class TransactionTO {
 
     private BigDecimal amount;
 
-    private Long transactionTypeId;
+    private String transactionTypeCode;
 
-    private Long cashBookId;
+    private String cashBookCode;
 
 }

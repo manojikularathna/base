@@ -1,9 +1,11 @@
 package org.army.common.accounting.bl.impl;
 
 import org.army.base.common.to.BaseResponse;
+import org.army.common.accounting.AccountingConstants;
 import org.army.common.accounting.bl.TransactionBL;
 import org.army.common.accounting.common.AccountingException;
 import org.army.common.accounting.common.AccountingInternalConstants;
+import org.army.common.accounting.dao.AccountsDao;
 import org.army.common.accounting.entity.CashBook;
 import org.army.common.accounting.entity.CashBookEntry;
 import org.army.common.accounting.entity.LedgerAccountEntry;
@@ -25,6 +27,9 @@ public class TransactionBLImpl implements TransactionBL {
     @Autowired
     private CommonDAO commonDao;
 
+    @Autowired
+    private AccountsDao accountsDao;
+
     @Transactional(propagation = Propagation.REQUIRED)
     public BaseResponse submit(AccountingRequest<TransactionTO> transactionRequest) {
 
@@ -32,14 +37,14 @@ public class TransactionBLImpl implements TransactionBL {
         TransactionTO transactionTO = transactionRequest.getPayload();
 
         try {
-            CashBook cashBook = commonDao.get(CashBook.class, transactionTO.getCashBookId());
+            CashBook cashBook = accountsDao.getCashBook(transactionTO.getCashBookCode(), transactionRequest.getOrganization());
             if (cashBook == null) {
                 throw AccountingException.builder()
                         .message(AccountingInternalConstants.ErrorCode.CASH_BOOK_INVALID)
                         .build();
             }
 
-            TransactionType transactionType = commonDao.get(TransactionType.class, transactionTO.getTransactionTypeId());
+            TransactionType transactionType = accountsDao.getTransactionType(transactionTO.getTransactionTypeCode(), transactionRequest.getOrganization());
             if (transactionType == null) {
                 throw AccountingException.builder()
                         .message(AccountingInternalConstants.ErrorCode.TRANSACTION_TYPE_INVALID)
@@ -75,6 +80,18 @@ public class TransactionBLImpl implements TransactionBL {
             response.setMessage(AccountingInternalConstants.ErrorCode.ERROR);
             response.setSuccess(false);
         }
+
+        return response;
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public BaseResponse aggregate(AccountingRequest<TransactionTO> transaction) {
+
+        List<CashBookEntry> previousEntries = accountsDao.getPreviousEntries(transaction.getPayload().getTransactionTypeCode(), transaction.getOrganization());
+        previousEntries.forEach(previousEntry -> previousEntry.setStatus(AccountingInternalConstants.Status.INACTIVE));
+        commonDao.update(previousEntries);
+
+        BaseResponse response = submit(transaction);
 
         return response;
     }

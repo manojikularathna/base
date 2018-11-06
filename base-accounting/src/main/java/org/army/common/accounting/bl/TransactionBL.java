@@ -9,4 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public interface TransactionBL {
 
     BaseResponse submit(AccountingRequest<TransactionTO> transaction);
+
+    BaseResponse aggregate(AccountingRequest<TransactionTO> transaction);
+
 }

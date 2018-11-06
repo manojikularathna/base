@@ -10,6 +10,8 @@ import java.util.List;
 @Getter
 public class FinalAccountsItemGroupTO {
 
+    private String groupCode;
+
     private String groupName;
 
     private List<FinalAccountsItemGroupTO> groups;

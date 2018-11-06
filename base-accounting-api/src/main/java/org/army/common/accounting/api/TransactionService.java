@@ -7,4 +7,6 @@ import org.army.common.accounting.to.transaction.TransactionTO;
 public interface TransactionService {
 
     BaseResponse submit(AccountingRequest<TransactionTO> transaction);
+
+    BaseResponse aggregate(AccountingRequest<TransactionTO> transaction);
 }

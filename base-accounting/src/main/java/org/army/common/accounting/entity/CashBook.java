@@ -17,6 +17,8 @@ public class CashBook extends AccountingOrganizationalEntity {
 
     private String cashBookName;
 
+    private String cashBookCode;
+
     private String description;
 
     private String status;

@@ -17,6 +17,14 @@ public interface AccountingConstants {
         String NONE = "N";
     }
 
+    interface LedgerCategoryName {
+        String INCOME = "Income";
+        String EXPENSE = "Expense";
+        String ASSET = "Asset";
+        String LIABILITY = "Liability";
+        String EQUITY = "Equity";
+    }
+
     interface FinalAccountType {
         String PROFIT_AND_LOSS_ACCOUNT = "PL";
         String BALANCE_SHEET = "BS";

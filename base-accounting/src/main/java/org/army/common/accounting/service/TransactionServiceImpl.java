@@ -24,4 +24,10 @@ public class TransactionServiceImpl implements TransactionService {
     public BaseResponse submit(@RequestBody AccountingRequest<TransactionTO> transaction) {
         return transactionBL.submit(transaction);
     }
+
+    @RequestMapping(path = "/aggregate", method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public BaseResponse aggregate(@RequestBody AccountingRequest<TransactionTO> transaction) {
+        return transactionBL.aggregate(transaction);
+    }
 }

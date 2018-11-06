@@ -141,12 +141,15 @@ public class FinalAccountsGenerator {
         finalAccountSubGroups = new ArrayList<>();
 
         finalAccountsItemSubGroupTO = new FinalAccountsItemGroupTO();
+        finalAccountsItemSubGroupTO.setGroupCode(AccountingConstants.LedgerCategory.ASSET);
+        finalAccountsItemSubGroupTO.setGroupName(AccountingConstants.LedgerCategoryName.ASSET);
         finalAccountsItemSubGroupTO.setLedgers(ledgerCategories.get(AccountingConstants.LedgerCategory.ASSET));
         finalAccountMainGroups.add(finalAccountsItemSubGroupTO);
 
-
         finalAccountsItemSubGroupTO = new FinalAccountsItemGroupTO();
-        finalAccountsItemSubGroupTO.setLedgers(ledgerCategories.get(AccountingConstants.LedgerCategory.EXPENSE));
+        finalAccountsItemSubGroupTO.setGroupCode(AccountingConstants.LedgerCategory.LIABILITY);
+        finalAccountsItemSubGroupTO.setGroupName(AccountingConstants.LedgerCategoryName.LIABILITY);
+        finalAccountsItemSubGroupTO.setLedgers(ledgerCategories.get(AccountingConstants.LedgerCategory.LIABILITY));
         finalAccountMainGroups.add(finalAccountsItemSubGroupTO);
 
         finalAccountsItemGroupTO.setGroups(finalAccountSubGroups);
@@ -157,21 +160,27 @@ public class FinalAccountsGenerator {
         finalAccountSubGroups = new ArrayList<>();
 
         finalAccountsItemSubGroupTO = new FinalAccountsItemGroupTO();
-        finalAccountsItemSubGroupTO.setLedgers(ledgerCategories.get(AccountingConstants.LedgerCategory.LIABILITY));
+        finalAccountsItemSubGroupTO.setGroupCode(AccountingConstants.LedgerCategory.EQUITY);
+        finalAccountsItemSubGroupTO.setGroupName(AccountingConstants.LedgerCategoryName.EQUITY);
+        finalAccountsItemSubGroupTO.setLedgers(ledgerCategories.get(AccountingConstants.LedgerCategory.EQUITY));
         finalAccountMainGroups.add(finalAccountsItemSubGroupTO);
 
-
         finalAccountsItemSubGroupTO = new FinalAccountsItemGroupTO();
+        finalAccountsItemSubGroupTO.setGroupCode(AccountingConstants.LedgerCategory.INCOME);
+        finalAccountsItemSubGroupTO.setGroupName(AccountingConstants.LedgerCategoryName.INCOME);
         finalAccountsItemSubGroupTO.setLedgers(ledgerCategories.get(AccountingConstants.LedgerCategory.INCOME));
         finalAccountMainGroups.add(finalAccountsItemSubGroupTO);
 
         finalAccountsItemSubGroupTO = new FinalAccountsItemGroupTO();
-        finalAccountsItemSubGroupTO.setLedgers(ledgerCategories.get(AccountingConstants.LedgerCategory.EQUITY));
+        finalAccountsItemSubGroupTO.setGroupCode(AccountingConstants.LedgerCategory.EXPENSE);
+        finalAccountsItemSubGroupTO.setGroupName(AccountingConstants.LedgerCategoryName.EXPENSE);
+        finalAccountsItemSubGroupTO.setLedgers(ledgerCategories.get(AccountingConstants.LedgerCategory.EXPENSE));
         finalAccountMainGroups.add(finalAccountsItemSubGroupTO);
 
         finalAccountsItemGroupTO.setGroups(finalAccountSubGroups);
         finalAccountMainGroups.add(finalAccountsItemGroupTO);
 
+        // ASSET - LIABILITY = EQUITY + ( INCOME - EXPENSE )
         return finalAccountMainGroups;
     }
 
