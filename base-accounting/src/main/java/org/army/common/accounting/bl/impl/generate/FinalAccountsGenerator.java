@@ -11,14 +11,12 @@ import org.army.common.accounting.to.common.OrganizationTO;
 import org.army.common.accounting.to.common.Range;
 import org.army.common.accounting.to.finalaccount.FinalAccountsItemGroupTO;
 import org.army.common.accounting.to.finalaccount.FinalAccountsItemLedgerTO;
-import org.army.common.accounting.to.ledger.LedgerAccountTO;
 import org.army.common.accounting.util.AccountsTransformerToTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 @Service
@@ -199,11 +197,14 @@ public class FinalAccountsGenerator {
 
         List<FinalAccountsItemGroupTO> subGroups = new ArrayList<>();
         group.getSubGroups()
-                .forEach(subGroup -> buildFinalAccountsItemGroup(subGroup, ledgerAccounts));
+                .forEach(subGroup -> subGroups.add(buildFinalAccountsItemGroup(subGroup, ledgerAccounts)));
 
         List<FinalAccountsItemLedgerTO> ledgers = new ArrayList<>();
         group.getElements()
                 .forEach(element -> ledgers.add(ledgerAccounts.get(element.getLedgerAccount().getLedgerAccountId())));
+
+        groupTO.setGroups(subGroups);
+        groupTO.setLedgers(ledgers);
 
         return groupTO;
     }

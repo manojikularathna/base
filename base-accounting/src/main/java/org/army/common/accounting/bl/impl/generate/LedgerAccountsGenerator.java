@@ -1,7 +1,6 @@
 package org.army.common.accounting.bl.impl.generate;
 
 import org.army.common.accounting.dao.AccountsGenerateDao;
-import org.army.common.accounting.entity.CashBookEntry;
 import org.army.common.accounting.entity.LedgerAccount;
 import org.army.common.accounting.entity.LedgerAccountEntry;
 import org.army.common.accounting.to.common.GeneratePeriod;

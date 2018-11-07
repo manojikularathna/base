@@ -1,8 +1,5 @@
 package org.army.common.accounting.to.common;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import java.math.BigDecimal;
 import java.util.Date;
 

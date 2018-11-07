@@ -1,7 +1,6 @@
 package org.army.common.accounting.bl.impl;
 
 import org.army.base.common.to.BaseResponse;
-import org.army.common.accounting.AccountingConstants;
 import org.army.common.accounting.bl.TransactionBL;
 import org.army.common.accounting.common.AccountingException;
 import org.army.common.accounting.common.AccountingInternalConstants;
