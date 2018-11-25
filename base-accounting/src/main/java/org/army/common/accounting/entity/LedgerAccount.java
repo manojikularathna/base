@@ -21,7 +21,7 @@ public class LedgerAccount extends AccountingOrganizationalEntity {
 
     private String ledgerCategory;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "ledgerAccount")
     private List<LedgerAccountBalance> openingBalance;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)

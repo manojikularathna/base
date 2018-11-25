@@ -2,7 +2,7 @@ package org.army.common.accounting.dao;
 
 import org.army.common.accounting.entity.*;
 import org.army.common.accounting.to.common.OrganizationTO;
-import org.army.common.accounting.to.common.Range;
+import org.army.base.common.to.Range;
 
 import java.math.BigDecimal;
 import java.util.Date;

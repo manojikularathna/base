@@ -1,4 +1,4 @@
-package org.army.common.accounting.to.common;
+package org.army.base.common.to;
 
 public class Range<T> {
 

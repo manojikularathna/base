@@ -1,6 +1,8 @@
 package org.army.common.accounting.bl.impl.generate;
 
+import org.army.common.accounting.AccountingConstants;
 import org.army.common.accounting.dao.AccountsGenerateDao;
+import org.army.common.accounting.entity.CashBookEntry;
 import org.army.common.accounting.entity.LedgerAccount;
 import org.army.common.accounting.entity.LedgerAccountEntry;
 import org.army.common.accounting.to.common.GeneratePeriod;
@@ -30,7 +32,11 @@ public class LedgerAccountsGenerator {
             openingBalance = ledgerAccount.getOpeningBalance().get(0).getBalance();
         }
 
-        openingBalance = openingBalance.add(getPreviousTransactionsSum(ledgerAccount.getLedgerAccountId(), generatePeriod.getFrom()));
+        if (ledgerAccount.getLedgerCategory().equals(AccountingConstants.LedgerCategory.EQUITY) ||
+                ledgerAccount.getLedgerCategory().equals(AccountingConstants.LedgerCategory.ASSET) ||
+                ledgerAccount.getLedgerCategory().equals(AccountingConstants.LedgerCategory.LIABILITY)) {
+            openingBalance = openingBalance.add(getPreviousTransactionsSum(ledgerAccount.getLedgerAccountId(), generatePeriod.getFrom()));
+        }
 
         AtomicReference<BigDecimal> runningBalance = new AtomicReference<>(openingBalance);
         List<LedgerAccountEntry> ledgerAccountEntries = accountsGenerateDao.getLedgerAccountEntries(ledgerAccount.getLedgerAccountId(), generatePeriod);
@@ -43,6 +49,13 @@ public class LedgerAccountsGenerator {
                 .forEach(ledgerAccountEntry -> {
                     LedgerAccountEntryTO ledgerAccountEntryTO = new LedgerAccountEntryTO();
 
+                    CashBookEntry cashBookEntry = ledgerAccountEntry.getCashBookEntry();
+                    runningBalance.set(runningBalance.get().add(cashBookEntry.getAmount()));
+
+                    ledgerAccountEntryTO.setDate(cashBookEntry.getDate());
+                    ledgerAccountEntryTO.setAmount(cashBookEntry.getAmount());
+                    ledgerAccountEntryTO.setDescription(cashBookEntry.getCashBook().getCashBookName());
+                    ledgerAccountEntryTO.setRunningBalance(runningBalance.get());
                     ledgerAccountEntryTOs.add(ledgerAccountEntryTO);
                 });
 
@@ -52,7 +65,7 @@ public class LedgerAccountsGenerator {
         return ledgerAccountTO;
     }
 
-    private BigDecimal getPreviousTransactionsSum(Long cashBookId, Date start) {
-        return accountsGenerateDao.getPreviousLedgerTransactionsSum(cashBookId, start);
+    private BigDecimal getPreviousTransactionsSum(Long ledgerAccountId, Date start) {
+        return accountsGenerateDao.getPreviousLedgerTransactionsSum(ledgerAccountId, start);
     }
 }

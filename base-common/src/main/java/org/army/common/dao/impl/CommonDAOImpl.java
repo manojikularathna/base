@@ -5,6 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.List;
 
 @Repository
@@ -31,7 +34,12 @@ public class CommonDAOImpl implements CommonDAO {
     }
 
     public <T> List<T> get(Class<T> type) {
-        return entityManager.createQuery(entityManager.getCriteriaBuilder().createQuery(type)).getResultList();
+
+        CriteriaQuery<T> query = entityManager.getCriteriaBuilder().createQuery(type);
+        Root<T> variableRoot = query.from(type);
+        query.select(variableRoot);
+
+        return entityManager.createQuery(query).getResultList();
     }
 
     public <T, I> T get(Class<T> type, I id) {

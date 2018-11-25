@@ -5,7 +5,7 @@ import org.army.common.accounting.common.AccountingInternalConstants;
 import org.army.common.accounting.dao.AccountsGenerateDao;
 import org.army.common.accounting.entity.*;
 import org.army.common.accounting.to.common.OrganizationTO;
-import org.army.common.accounting.to.common.Range;
+import org.army.base.common.to.Range;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -33,7 +33,8 @@ public class AccountsGenerateDaoImpl implements AccountsGenerateDao {
 
         List<CashBookEntry> cashBooksEntries = entityManager
                 .createQuery(" select  e from CashBookEntry e where e.cashBook.cashBookId = :cashBookId and e.status = :status " +
-                        " and e.date >= :fromDate and e.date <= :toDate and e.transactionType.transactionCategory in ( :categories ) order by e.date ")
+                        " and e.date >= :fromDate and e.date <= :toDate and e.transactionType.transactionCategory in ( :categories ) " +
+                        " and e.amount <> 0 order by e.date ")
                 .setParameter("cashBookId", cashBookId)
                 .setParameter("status", AccountingInternalConstants.Status.ACTIVE)
                 .setParameter("fromDate", range.getFrom())
@@ -76,7 +77,8 @@ public class AccountsGenerateDaoImpl implements AccountsGenerateDao {
 
         List<LedgerAccountEntry> ledgerAccountEntries = entityManager
                 .createQuery(" select  e from LedgerAccountEntry e where e.ledgerAccount.ledgerAccountId = :ledgerAccountId and e.status = :status " +
-                        " and e.cashBookEntry.date >= :fromDate and e.cashBookEntry.date <= :toDate order by e.cashBookEntry.date ")
+                        " and e.cashBookEntry.date >= :fromDate and e.cashBookEntry.date <= :toDate and e.cashBookEntry.amount <> 0" +
+                        " order by e.cashBookEntry.date ")
                 .setParameter("ledgerAccountId", ledgerAccountId)
                 .setParameter("status", AccountingInternalConstants.Status.ACTIVE)
                 .setParameter("fromDate", range.getFrom())
@@ -105,12 +107,17 @@ public class AccountsGenerateDaoImpl implements AccountsGenerateDao {
 
     public FinalAccountStructure getFinalAccountStructure(OrganizationTO organization, String finalAccountType) {
 
-        FinalAccountStructure structure = (FinalAccountStructure) entityManager
+        FinalAccountStructure structure = null;
+        List<FinalAccountStructure> structures = entityManager
                 .createQuery("select s from FinalAccountStructure s where s.organization = :organization " +
-                        " and s.finalAccountType < :finalAccountType ")
+                        " and s.finalAccountType = :finalAccountType ")
                 .setParameter("organization", organization.getOrganization())
                 .setParameter("finalAccountType", finalAccountType)
-                .getSingleResult();
+                .getResultList();
+
+        if (!structures.isEmpty()) {
+            structure = structures.get(0);
+        }
 
         return structure;
     }
@@ -127,7 +134,7 @@ public class AccountsGenerateDaoImpl implements AccountsGenerateDao {
                 .setParameter("toDate", range.getTo())
                 .getResultList();
 
-        if (summations == null) {
+        if (summations != null) {
             summations.forEach(summation -> transactionSummations.put((Long) summation[0], (BigDecimal) summation[1]));
         }
 
@@ -143,16 +150,20 @@ public class AccountsGenerateDaoImpl implements AccountsGenerateDao {
     public Map<Long, BigDecimal> getLedgerTransactionsSum(List<Long> ledgerAccountIds, Date end) {
 
         Map<Long, BigDecimal> transactionSummations = new HashMap<>();
-        List<Object[]> summations = entityManager
-                .createQuery("select e.ledgerAccount.ledgerAccountId, sum (e.cashBookEntry.amount) from LedgerAccountEntry e where e.ledgerAccount.ledgerAccountId in ( :ledgerAccountIds ) and e.status = :status " +
-                        " and e.cashBookEntry.date <= :toDate group by e.ledgerAccount.ledgerAccountId ")
-                .setParameter("ledgerAccountIds", ledgerAccountIds)
-                .setParameter("status", AccountingInternalConstants.Status.ACTIVE)
-                .setParameter("toDate", end)
-                .getResultList();
+        List<Object[]> summations;
 
-        if (summations == null) {
-            summations.forEach(summation -> transactionSummations.put((Long) summation[0], (BigDecimal) summation[1]));
+        if (!ledgerAccountIds.isEmpty()) {
+            summations = entityManager
+                    .createQuery("select e.ledgerAccount.ledgerAccountId, sum (e.cashBookEntry.amount) from LedgerAccountEntry e where e.ledgerAccount.ledgerAccountId in ( :ledgerAccountIds ) and e.status = :status " +
+                            " and e.cashBookEntry.date <= :toDate group by e.ledgerAccount.ledgerAccountId ")
+                    .setParameter("ledgerAccountIds", ledgerAccountIds)
+                    .setParameter("status", AccountingInternalConstants.Status.ACTIVE)
+                    .setParameter("toDate", end)
+                    .getResultList();
+
+            if (summations != null) {
+                summations.forEach(summation -> transactionSummations.put((Long) summation[0], (BigDecimal) summation[1]));
+            }
         }
 
         ledgerAccountIds.forEach(ledgerAccountId -> {

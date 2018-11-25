@@ -1,5 +1,6 @@
 package org.army.common.accounting.dao.impl;
 
+import org.army.base.common.to.Range;
 import org.army.common.accounting.dao.AccountsDao;
 import org.army.common.accounting.entity.CashBook;
 import org.army.common.accounting.entity.CashBookEntry;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -33,11 +35,15 @@ public class AccountsDaoImpl implements AccountsDao {
                 .getSingleResult();
     }
 
-    public List<CashBookEntry> getPreviousEntries(String transactionCode, OrganizationTO organization) {
+    public List<CashBookEntry> getPreviousEntries(String transactionCode, Range<Date> dateRange, OrganizationTO organization) {
+
         return entityManager
-                .createQuery(" select e from CashBookEntry e where e.transactionType.transactionCode = :transactionCode and e.cashBook.organization = :organization ")
+                .createQuery(" select e from CashBookEntry e where e.transactionType.transactionCode = :transactionCode and e.cashBook.organization = :organization " +
+                        " and e.date >= :fromDate and e.date <= :toDate ")
                 .setParameter("transactionCode", transactionCode)
                 .setParameter("organization", organization.getOrganization())
+                .setParameter("fromDate", dateRange.getFrom())
+                .setParameter("toDate", dateRange.getTo())
                 .getResultList();
     }
 }

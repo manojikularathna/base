@@ -1,6 +1,8 @@
 package org.army.common.accounting.bl.impl;
 
 import org.army.base.common.to.BaseResponse;
+import org.army.base.common.to.Range;
+import org.army.common.accounting.AccountingConstants;
 import org.army.common.accounting.bl.TransactionBL;
 import org.army.common.accounting.common.AccountingException;
 import org.army.common.accounting.common.AccountingInternalConstants;
@@ -12,12 +14,15 @@ import org.army.common.accounting.entity.TransactionType;
 import org.army.common.accounting.to.AccountingRequest;
 import org.army.common.accounting.to.transaction.TransactionTO;
 import org.army.common.dao.CommonDAO;
+import org.army.common.util.DateTimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -34,6 +39,7 @@ public class TransactionBLImpl implements TransactionBL {
 
         BaseResponse response = new BaseResponse();
         TransactionTO transactionTO = transactionRequest.getPayload();
+        BigDecimal amount;
 
         try {
             CashBook cashBook = accountsDao.getCashBook(transactionTO.getCashBookCode(), transactionRequest.getOrganization());
@@ -50,8 +56,13 @@ public class TransactionBLImpl implements TransactionBL {
                         .build();
             }
 
+            amount = transactionTO.getAmount().abs();
+            if (transactionType.getTransactionCategory().equals(AccountingConstants.TransactionCategory.CREDIT)) {
+                amount = amount.negate();
+            }
+
             CashBookEntry cashBookEntry = new CashBookEntry();
-            cashBookEntry.setAmount(transactionTO.getAmount());
+            cashBookEntry.setAmount(amount);
             cashBookEntry.setDate(transactionTO.getDate());
             cashBookEntry.setCashBook(cashBook);
             cashBookEntry.setTransactionType(transactionType);
@@ -86,7 +97,13 @@ public class TransactionBLImpl implements TransactionBL {
     @Transactional(propagation = Propagation.REQUIRED)
     public BaseResponse aggregate(AccountingRequest<TransactionTO> transaction) {
 
-        List<CashBookEntry> previousEntries = accountsDao.getPreviousEntries(transaction.getPayload().getTransactionTypeCode(), transaction.getOrganization());
+        TransactionTO payload = transaction.getPayload();
+
+        Range<Date> startAndEnd = DateTimeUtil.getStartAndEnd(payload.getDate());
+
+        List<CashBookEntry> previousEntries =
+                accountsDao.getPreviousEntries(payload.getTransactionTypeCode(), startAndEnd
+                        , transaction.getOrganization());
         previousEntries.forEach(previousEntry -> previousEntry.setStatus(AccountingInternalConstants.Status.INACTIVE));
         commonDao.update(previousEntries);
 

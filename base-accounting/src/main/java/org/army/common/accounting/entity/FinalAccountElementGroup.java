@@ -27,6 +27,8 @@ public class FinalAccountElementGroup extends AccountingEntity {
     @JoinColumn(referencedColumnName = "element_group_id")
     private List<FinalAccountElement> elements;
 
+    private String operator;
+
     private String groupHeader;
 
     private String groupFooter;

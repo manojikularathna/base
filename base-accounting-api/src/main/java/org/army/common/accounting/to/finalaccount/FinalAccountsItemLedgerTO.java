@@ -14,4 +14,6 @@ public class FinalAccountsItemLedgerTO {
 
     private BigDecimal balance;
 
+    private String operator;
+
 }

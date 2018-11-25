@@ -5,7 +5,6 @@ public interface AccountingConstants {
     interface TransactionCategory {
         String CREDIT = "C";
         String DEBIT = "D";
-        String NONE = "N";
     }
 
     interface LedgerCategory {
@@ -32,6 +31,11 @@ public interface AccountingConstants {
         interface Group {
             String UNCLASSIFIED = "UNCLASSIFIED";
         }
+    }
+
+    interface FinalAccountOperator {
+        String ADD = "+";
+        String SUBTRACT = "-";
     }
 
 }

@@ -18,6 +18,8 @@ public class FinalAccountsItemGroupTO {
 
     private List<FinalAccountsItemLedgerTO> ledgers;
 
+    private String operator;
+
     private String balanceName;
 
     private BigDecimal balance;

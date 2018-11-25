@@ -7,11 +7,9 @@ import org.army.common.accounting.to.AccountingRequest;
 import org.army.common.accounting.to.transaction.TransactionTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin
 @RestController
 @RequestMapping(path = "/transaction")
 public class TransactionServiceImpl implements TransactionService {

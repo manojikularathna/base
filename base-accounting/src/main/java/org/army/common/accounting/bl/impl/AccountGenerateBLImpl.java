@@ -75,7 +75,10 @@ public class AccountGenerateBLImpl implements AccountGenerateBL {
             List<LedgerAccount> ledgerAccounts = accountsGenerateDao.getLedgerAccounts(request.getOrganization());
 
             List<LedgerAccountTO> ledgerAccountTOs = new ArrayList<>();
-            ledgerAccounts.forEach(ledgerAccount -> ledgerAccountTOs.add(ledgerAccountsGenerator.generateLedgerAccountTO(ledgerAccount, generatePeriod)));
+            ledgerAccounts
+                    .stream()
+                    .filter(ledgerAccount -> !ledgerAccount.getLedgerCategory().equals(AccountingConstants.LedgerCategory.NONE))
+                    .forEach(ledgerAccount -> ledgerAccountTOs.add(ledgerAccountsGenerator.generateLedgerAccountTO(ledgerAccount, generatePeriod)));
 
             ledgerResponse.setLedgers(ledgerAccountTOs);
             ledgerResponse.setSuccess(true);
